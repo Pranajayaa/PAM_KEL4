@@ -28,14 +28,6 @@ php artisan key:generate
 ```
 
 ```bash
-npm install
-```
-
-```bash
-npm run dev
-```
-
-```bash
 php artisan serve
 ```
 

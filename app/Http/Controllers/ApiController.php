@@ -6,9 +6,11 @@ use App\Models\User;
 use App\Models\Categories;
 use App\Models\PersonalShoppers;
 use App\Models\PersonalShopperImages;
+use App\Models\Customers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
 class ApiController extends Controller
@@ -52,6 +54,24 @@ class ApiController extends Controller
                     'username' => 'The provided credentials do not match our records.',
                 ]);
             }
+        } catch (Exception $e) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        try {
+            Auth::logout();
+
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return response()->json([
+                    'success' => true,
+                    'code' => 200,
+                    'message' => 'Anda berhasil logout'
+                ], 200);
         } catch (Exception $e) {
             return response()->json($th->getMessage(), 500);
         }
@@ -293,6 +313,148 @@ class ApiController extends Controller
                 'code' => 200,
                 'message' => 'Berhasil menghapus data foto jastip'
             ], 200);
+        } catch (Exception $e) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
+
+    public function createCustomers(Request $request)
+    {
+        try {
+            $req = $request->all();
+            $user = Auth::user();
+
+            $data = User::find($user->id);
+
+            $req['created_at'] = date('Y-m-d H:i:s');
+            $req['created_by'] = $data->id;
+            $req['updated_at'] = date('Y-m-d H:i:s');
+            $req['updated_by'] = $data->id;
+
+            $customer = Customers::create($req);
+            return response()->json([
+                'success' => true,
+                'code' => 200,
+                'message' => 'Berhasil menambahkan data customer'
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
+
+    public function indexCustomers()
+    {
+        try {
+            $data = Customers::get();
+
+            return response()->json([
+                'data' => $data,
+                'success' => true,
+                'code' => 200
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
+
+    public function editCustomers($id)
+    {
+        try {
+            $customer = Customers::find($id);
+
+            return response()->json([
+                'results' => $customer
+            ]);
+        } catch (Exception $e) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
+
+    public function updateCustomers(Request $request, $id)
+    {
+        try {
+            $customer = Customers::find($id);
+            $req = $request->all();
+
+            $user = Auth::user();
+            $data = User::find($user->id);
+
+            $req['updated_at'] = date('Y-m-d H:i:s');
+            $req['updated_by'] = $data->id;
+
+            $customer->update($req);
+
+            return response()->json([
+                'success' => true,
+                'code' => 200,
+                'message' => 'Berhasil mengubah data customer'
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
+
+    public function destroyCustomers($id)
+    {
+        try {
+            $customer = Customers::find($id)->delete();
+
+            return response()->json([
+                'success' => true,
+                'code' => 200,
+                'message' => 'Berhasil menghapus data customer'
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
+
+    public function getPersonalShoppers(Request $request)
+    {
+        try {
+            $req = $request->all();
+            $search = '';
+            $user = Auth::user();
+            if (isset($req['term'])) {
+                $search = $req['term'];
+            }
+
+            $data = PersonalShoppers::select('name', 'id')
+                ->where(function ($q) use ($search) {
+                    $q->orWhere('name', 'LIKE', '%' . $search . '%');
+                })
+                ->where('created_by', $user->id)
+                ->take(10)
+                ->get()
+                ->toArray();
+
+            return response()->json(['results' => $data]);
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
+
+    public function reportShopper(Request $request)
+    {
+        try {
+            $req = $request->all();
+
+            $data = DB::select("
+                        SELECT
+                            personal_shoppers.id,
+                            personal_shoppers.name,
+                            personal_shoppers.stock,
+                            COUNT(customers.id) as jumlah
+                        FROM
+                            personal_shoppers
+                            INNER JOIN customers on customers.personal_shopper_id = personal_shoppers.id
+                        GROUP BY 
+                            personal_shoppers.id
+                        HAVING 
+                            COUNT(customers.id) > 0
+                    ");
+
+            return response()->json(['results' => $data]);
         } catch (Exception $e) {
             return response()->json($th->getMessage(), 500);
         }

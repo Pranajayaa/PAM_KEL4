@@ -43,16 +43,20 @@ class ApiController extends Controller
         try {
             $req = $request->all();
             if (Auth::attempt($request->only('username', 'password'))) {
+                $data = User::where('username', $req['username'])->get();
                 $request->session()->regenerate();
                 return response()->json([
+                    'data' => $data,
                     'success' => true,
                     'code' => 200,
                     'message' => 'Selamat datang ' . $req['username']
                 ], 200);
             } else {
-                return back()->withErrors([
-                    'username' => 'The provided credentials do not match our records.',
-                ]);
+                return response()->json([
+                    'success' => false,
+                    'code' => 401,
+                    'message' => 'The provided credentials do not match our records.'
+                ], 401);
             }
         } catch (Exception $e) {
             return response()->json($th->getMessage(), 500);

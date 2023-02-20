@@ -24,6 +24,10 @@ Route::post('/register', [ApiController::class, 'register'])->name('api.register
 Route::post('/login', [ApiController::class, 'login'])->name('api.login');
 Route::get('/logout', [ApiController::class, 'logout'])->name('api.logout');
 
+//profile
+Route::get('/editProfile/{id}', [ApiController::class, 'editProfile'])->name('api.edit-profile');
+Route::post('/updateProfile/{id}', [ApiController::class, 'updateProfile'])->name('api.update-profile');
+
 //categories
 Route::post('/createCategories', [ApiController::class, 'createCategories'])->name('api.create-categories');
 Route::get('/indexCategories', [ApiController::class, 'indexCategories'])->name('api.index-categories');

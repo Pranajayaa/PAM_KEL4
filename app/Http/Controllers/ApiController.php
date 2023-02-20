@@ -63,6 +63,57 @@ class ApiController extends Controller
         }
     }
 
+    public function editProfile($id)
+    {
+        try {
+            $user = User::find($id);
+
+            return response()->json([
+                'data' => $user,
+                'success' => true,
+                'code' => 200
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
+
+    public function updateProfile(Request $request, $id)
+    {
+        try {
+            $user = User::find($id);
+            $req = $request->all();
+            if (!empty($req['password'])) {
+                $req['password'] = Hash::make($req['password']);
+            } else {
+                unset($req['password']);
+            }
+
+            if (!empty($req['picture'])) {
+                $imageName = time() . '.' . $request['picture']->extension();
+                $request['picture']->move(public_path('assets/profile'), $imageName);
+                $req['picture'] = '/assets/profile/' . $imageName;
+            }
+
+            $req['updated_at'] = date('Y-m-d H:i:s');
+            $req['updated_by'] = $id;
+
+            $user->update($req);
+
+            DB::table('model_has_roles')->where('model_id', $id)->delete();
+
+            $user->assignRole($req['roles']);
+
+            return response()->json([
+                'data' => $user,
+                'success' => true,
+                'code' => 200
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
+
     public function logout(Request $request)
     {
         try {
@@ -237,7 +288,7 @@ class ApiController extends Controller
     public function editPersonalShopper($id)
     {
         try {
-            $shopper = PersonalShoppers::with('personalShopperImages')->get();
+            $shopper = PersonalShoppers::with('personalShopperImages')->where('personal_shoppers.id', $id)->get();
 
             return response()->json([
                 'results' => $shopper

@@ -12,4 +12,9 @@ class PersonalShoppers extends Model
     {
         return $this->hasMany('App\Models\PersonalShopperImages', 'personal_shopper_id', 'id');
     }
+
+    public function customer()
+    {
+        return $this->hasMany('App\Models\Customers', 'personal_shopper_id', 'id');
+    }
 }

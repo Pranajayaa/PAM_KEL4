@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect('/application');
-});
-// Route::get('/', 'PagesController@index');
+// Route::get('/', function () {
+//     return redirect('/application');
+// });
+Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about')->name('about');

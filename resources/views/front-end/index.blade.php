@@ -76,7 +76,7 @@
           </div>
         </div>
         <div class="col-lg-6 d-lg-flex flex-lg-column align-items-stretch order-1 order-lg-2 hero-img" data-aos="fade-up">
-          <img src="assets/img/hero-img.png" class="img-fluid" alt="">
+          <img src="{{asset('assets-landing/img/hero-img.png')}}" class="img-fluid" alt="">
         </div>
       </div>
     </div>
@@ -127,7 +127,7 @@
             </div>
           </div>
           <div class="image col-xl-5 d-flex align-items-stretch justify-content-center order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
-            <img src="assets/img/features.svg" class="img-fluid" alt="">
+            <img src="{{ asset('assets-landing/img/features.svg') }}" class="img-fluid" alt="">
           </div>
         </div>
 
@@ -147,11 +147,12 @@
       <div class="container-fluid" data-aos="fade-up">
         <div class="gallery-slider swiper">
           <div class="swiper-wrapper">
-            <div class="swiper-slide"><a href="#" class="gallery-lightbox" data-gall="gallery-carousel"><img src="{{ asset('assets-landing/img/gallery/gallery-1.png') }}" class="img-fluid" alt=""></a></div>
-            <div class="swiper-slide"><a href="#" class="gallery-lightbox" data-gall="gallery-carousel"><img src="{{ asset('assets-landing/img/gallery/gallery-2.png') }}" class="img-fluid" alt=""></a></div>
-            <div class="swiper-slide"><a href="#" class="gallery-lightbox" data-gall="gallery-carousel"><img src="{{ asset('assets-landing/img/gallery/gallery-3.png') }}" class="img-fluid" alt=""></a></div>
-            <div class="swiper-slide"><a href="#"class="gallery-lightbox" data-gall="gallery-carousel"><img src="{{ asset('assets-landing/img/gallery/gallery-4.png') }}" class="img-fluid" alt=""></a></div>
-            <div class="swiper-slide"><a href="#"class="gallery-lightbox" data-gall="gallery-carousel"><img src="{{ asset('assets-landing/img/gallery/gallery-5.png') }}" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a href="#" class="gallery-lightbox" data-gall="gallery-carousel"><img src="{{ asset('assets-landing/img/gallery/landing.jpg') }}" class="img-fluid" alt="landing Jastip"></a></div>
+            <div class="swiper-slide"><a href="#" class="gallery-lightbox" data-gall="gallery-carousel"><img src="{{ asset('assets-landing/img/gallery/login.jpg') }}" class="img-fluid" alt="Login Jastip"></a></div>
+            <div class="swiper-slide"><a href="#" class="gallery-lightbox" data-gall="gallery-carousel"><img src="{{ asset('assets-landing/img/gallery/register.jpg') }}" class="img-fluid" alt="Register Jastip"></a></div>
+            <div class="swiper-slide"><a href="#" class="gallery-lightbox" data-gall="gallery-carousel"><img src="{{ asset('assets-landing/img/gallery/profile.jpg') }}" class="img-fluid" alt="Profile Jastip"></a></div>
+            <div class="swiper-slide"><a href="#" class="gallery-lightbox" data-gall="gallery-carousel"><img src="{{ asset('assets-landing/img/gallery/dashboard.jpg') }}" class="img-fluid" alt="Dashboard Jastip"></a></div>
+            <div class="swiper-slide"><a href="#" class="gallery-lightbox" data-gall="gallery-carousel"><img src="{{ asset('assets-landing/img/gallery/data-customer.jpg') }}" class="img-fluid" alt="Customer Jastip"></a></div>
           </div>
           <div class="swiper-pagination"></div> 
         </div>

@@ -136,14 +136,14 @@ class ApiController extends Controller
     {
         try {
             $req = $request->all();
-            $user = Auth::user();
+            // $user = Auth::user();
 
-            $data = User::find($user->id);
+            // $data = User::find($user->id);
 
             $req['created_at'] = date('Y-m-d H:i:s');
-            $req['created_by'] = $data->id;
+            // $req['created_by'] = $data->id;
             $req['updated_at'] = date('Y-m-d H:i:s');
-            $req['updated_by'] = $data->id;
+            // $req['updated_by'] = $data->id;
 
             $categories = Categories::create($req);
             return response()->json([
@@ -190,11 +190,11 @@ class ApiController extends Controller
             $categories = Categories::find($id);
             $req = $request->all();
 
-            $user = Auth::user();
-            $data = User::find($user->id);
+            // $user = Auth::user();
+            // $data = User::find($user->id);
 
             $req['updated_at'] = date('Y-m-d H:i:s');
-            $req['updated_by'] = $data->id;
+            // $req['updated_by'] = $data->id;
 
             $categories->update($req);
 
@@ -227,14 +227,14 @@ class ApiController extends Controller
     {
         try {
             $req = $request->all();
-            // dd($req);
+            dd($req);
             $user = Auth::user();
             $data = User::find($user->id);
 
             $req['created_at'] = date('Y-m-d H:i:s');
-            $req['created_by'] = $data->id;
+            // $req['created_by'] = $data->id;
             $req['updated_at'] = date('Y-m-d H:i:s');
-            $req['updated_by'] = $data->id;
+            // $req['updated_by'] = $data->id;
 
             $shopper = PersonalShoppers::create($req);
 
@@ -304,11 +304,11 @@ class ApiController extends Controller
             $shopper = PersonalShoppers::find($id);
             $req = $request->all();
 
-            $user = Auth::user();
-            $data = User::find($user->id);
+            // $user = Auth::user();
+            // $data = User::find($user->id);
 
             $req['updated_at'] = date('Y-m-d H:i:s');
-            $req['updated_by'] = $data->id;
+            // $req['updated_by'] = $data->id;
 
             $shopper->update($req);
 
@@ -377,14 +377,14 @@ class ApiController extends Controller
     {
         try {
             $req = $request->all();
-            $user = Auth::user();
+            // $user = Auth::user();
 
-            $data = User::find($user->id);
+            // $data = User::find($user->id);
 
             $req['created_at'] = date('Y-m-d H:i:s');
-            $req['created_by'] = $data->id;
+            // $req['created_by'] = $data->id;
             $req['updated_at'] = date('Y-m-d H:i:s');
-            $req['updated_by'] = $data->id;
+            // $req['updated_by'] = $data->id;
 
             $customer = Customers::create($req);
             return response()->json([
@@ -431,11 +431,11 @@ class ApiController extends Controller
             $customer = Customers::find($id);
             $req = $request->all();
 
-            $user = Auth::user();
-            $data = User::find($user->id);
+            // $user = Auth::user();
+            // $data = User::find($user->id);
 
             $req['updated_at'] = date('Y-m-d H:i:s');
-            $req['updated_by'] = $data->id;
+            // $req['updated_by'] = $data->id;
 
             $customer->update($req);
 

@@ -412,7 +412,7 @@ class ApiController extends Controller
     public function editCustomers($id)
     {
         try {
-            $customer = Customers::find($id);
+            $customer = Customers::with('personalshopper')->where('customers.id', $id)->get();
 
             return response()->json([
                 'results' => $customer

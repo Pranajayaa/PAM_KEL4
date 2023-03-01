@@ -227,8 +227,6 @@ class ApiController extends Controller
     {
         try {
             $req = $request->all();
-            $user = Auth::user();
-            $data = User::find($user->id);
 
             $req['created_at'] = date('Y-m-d H:i:s');
             // $req['created_by'] = $data->id;
@@ -248,9 +246,9 @@ class ApiController extends Controller
                         'personal_shopper_id' => $shopper->id,
                         'name' => 'uploads/shopper_image/' . $fileName,
                         'created_at' => date('Y-m-d H:i:s'),
-                        'created_by' => $data->id,
+                        // 'created_by' => $data->id,
                         'updated_at' => date('Y-m-d H:i:s'),
-                        'updated_by' => $data->id,
+                        // 'updated_by' => $data->id,
                     ];
                 }
             }
@@ -322,7 +320,7 @@ class ApiController extends Controller
                         'personal_shopper_id' => $id,
                         'name' => 'uploads/shopper_image/' . $fileName,
                         'updated_at' => date('Y-m-d H:i:s'),
-                        'updated_by' => $data->id,
+                        // 'updated_by' => $data->id,
                     ];
                 }
             }
@@ -463,12 +461,12 @@ class ApiController extends Controller
         }
     }
 
-    public function getPersonalShoppers(Request $request)
+    public function getPersonalShoppers(Request $request, $id)
     {
         try {
             $req = $request->all();
             $search = '';
-            $user = Auth::user();
+            // $user = Auth::user();
             if (isset($req['term'])) {
                 $search = $req['term'];
             }
@@ -477,7 +475,7 @@ class ApiController extends Controller
                 ->where(function ($q) use ($search) {
                     $q->orWhere('name', 'LIKE', '%' . $search . '%');
                 })
-                ->where('created_by', $user->id)
+                ->where('created_by', $id)
                 ->take(10)
                 ->get()
                 ->toArray();

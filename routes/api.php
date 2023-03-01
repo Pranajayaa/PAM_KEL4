@@ -49,7 +49,7 @@ Route::get('/indexCustomers', [ApiController::class, 'indexCustomers'])->name('a
 Route::get('/editCustomers/{id}', [ApiController::class, 'editCustomers'])->name('api.edit-customer');
 Route::post('/updateCustomers/{id}', [ApiController::class, 'updateCustomers'])->name('api.update-customer');
 Route::get('/destroyCustomers/{id}', [ApiController::class, 'destroyCustomers'])->name('api.destroy-categories');
-Route::get('/getPersonalShoppers', [ApiController::class, 'getPersonalShoppers'])->name('api.get-shopper');
+Route::get('/getPersonalShoppers/{id}', [ApiController::class, 'getPersonalShoppers'])->name('api.get-shopper');
 
 //report
 Route::get('/reportShopper', [ApiController::class, 'reportShopper'])->name('api.report-shopper');

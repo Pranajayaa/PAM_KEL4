@@ -10,6 +10,6 @@ class Customers extends Model
 
     public function personalshopper()
     {
-        return $this->belongsTo('App\Models\Categories', 'category_id', 'id');
+        return $this->belongsTo('App\Models\PersonalShoppers', 'personal_shopper_id', 'id');
     }
 }

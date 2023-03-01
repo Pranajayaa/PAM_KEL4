@@ -227,7 +227,6 @@ class ApiController extends Controller
     {
         try {
             $req = $request->all();
-            dd($req);
             $user = Auth::user();
             $data = User::find($user->id);
 

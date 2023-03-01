@@ -270,7 +270,7 @@ class ApiController extends Controller
     public function indexPersonalShopper()
     {
         try {
-            $data = PersonalShoppers::with('personalShopperImages')->get();
+            $data = PersonalShoppers::with('personalShopperImages','category')->get();
 
             return response()->json([
                 'data' => $data,

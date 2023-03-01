@@ -285,7 +285,7 @@ class ApiController extends Controller
     public function editPersonalShopper($id)
     {
         try {
-            $shopper = PersonalShoppers::with('personalShopperImages')->where('personal_shoppers.id', $id)->get();
+            $shopper = PersonalShoppers::with('personalShopperImages','category')->where('personal_shoppers.id', $id)->get();
 
             return response()->json([
                 'results' => $shopper

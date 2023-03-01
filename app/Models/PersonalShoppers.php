@@ -17,4 +17,9 @@ class PersonalShoppers extends Model
     {
         return $this->hasMany('App\Models\Customers', 'personal_shopper_id', 'id');
     }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Categories', 'category_id', 'id');
+    }
 }
